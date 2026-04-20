@@ -1,2 +1,2 @@
 # bayesian-swr
-A Bayesian alternative to classical Monte Carlo for retirement planning
+Bayesian MCMC approach to retirement Safe Withdrawal Rate analysis with parameter uncertainty modeling, a Bayesian alternative to classical Monte Carlo
