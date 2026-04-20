@@ -48,6 +48,12 @@ This properly accounts for both:
 - Aleatoric uncertainty: Returns are random even if we knew the true parameters
 - Epistemic uncertainty: We don't know the true parameters, only have estimates
 
+**A useful mental model:**
+> Classical MC = "We know the dice, now roll them many times."
+> Bayesian MCMC = "We're not even sure what dice we're using, so sample both the dice *and* the rolls."
+
+That second layer is exactly what widens the distribution.
+
 ## Results: Classical vs. Bayesian
 
 We applied both methods to a classic 60/40 portfolio using real historical data.
@@ -103,10 +109,14 @@ Convergence: R-hat = 1.002 (excellent)
 **Implementation:** PyMC 5.x with ArviZ for diagnostics.
 
 **Limitations:**
-- Assumes returns are normally distributed (fat tails not modeled). In reality, moving to a fat-tailed distribution (e.g., Student's t or skew-t) would likely reveal even more extreme left-tail risk.
-- Assumes stationarity (no regime switching)
-- Limited historical data (19 years) for modern ETFs—this is actually a feature of the analysis, highlighting the parameter uncertainty problem
+- Assumes returns are normally distributed (fat tails not modeled). In reality, moving to a fat-tailed distribution (e.g., Student's t or skew-t) would likely reveal even more extreme left-tail risk for *both* methods.
+- Assumes stationarity (no regime switching). A Markov-switching model (e.g., high/low inflation regimes) would likely matter more than parameter uncertainty alone.
+- The prior anchors to the sample mean (8.48%). A more skeptical prior (e.g., shrinking toward long-run equity risk premium of 4-6%) would lower success rates further and widen the Bayesian/classical gap.
+- The 2008-2026 sample includes a strong post-GFC bull run and misses 1970s stagflation, potentially biasing both mean estimates and posterior dispersion.
+- Limited historical data (19 years) for modern ETFs—this is intentionally part of the analysis to highlight parameter uncertainty, but it amplifies the effect.
 - Computational cost: ~2 seconds vs. milliseconds for classical MC
+
+**Interpretation nuance:** The $91K 5th percentile shouldn't be taken literally as "your true 5th percentile is $91K." It's better interpreted as: *"If we admit we don't know the true expected return, downside outcomes are much more sensitive than classical MC suggests."* Model specification (fat tails, regimes, priors) likely matters more than the Bayesian vs. classical distinction once you move beyond Gaussian IID assumptions.
 
 **Additional testing:** We also ran the same analysis on synthetic equity data (7% expected return, 18% volatility) with 150 years of history. Classical MC showed 83.9% success vs. 83.7% for Bayesian MCMC—a difference of only 0.2 percentage points (pp). The much smaller gap occurs because longer data reduces parameter uncertainty (SEM = 1.47% vs. 2.64% for the 19-year ETF history).
 
