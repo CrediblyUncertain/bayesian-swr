@@ -49,7 +49,7 @@ This properly accounts for both:
 - Epistemic uncertainty: We don't know the true parameters, only have estimates
 
 **A useful mental model:**
-> Classical MC = "We know the dice, now roll them many times."
+> Classical MC = "We know the dice, now roll them many times."  
 > Bayesian MCMC = "We're not even sure what dice we're using, so sample both the dice *and* the rolls."
 
 That second layer is exactly what widens the distribution.
