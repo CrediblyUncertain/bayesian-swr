@@ -14,12 +14,14 @@ Classical Monte Carlo simulation for retirement planning typically follows this 
 2. Treat these estimates as the *true* population parameters
 3. Simulate future paths using these fixed values
 
-**The issue:** Even with 150 years of Shiller data, our estimate of the true mean return has substantial uncertainty. With 150 observations and ~18% annual volatility:
+**The issue:** Even with substantial historical data (e.g., Robert Shiller's 150-year dataset), our estimate of the true mean return has substantial uncertainty. To illustrate: with 150 observations and ~18% annual volatility:
 
 - Standard Error of the Mean = 18%/√150 ≈ **1.47%**
 - 95% CI for true mean return: approximately **[4.1%, 9.9%]** (assuming 7% sample mean)
 
-Classical MC assumes we know the answer is 7%. In reality, any value in that range is consistent with the historical data. This is what statisticians call **epistemic uncertainty** (uncertainty in our knowledge) as opposed to **aleatoric uncertainty** (inherent randomness in future returns).
+Classical MC assumes we know the answer is exactly 7%. In reality, any value in that range is consistent with the historical data. This is what statisticians call **epistemic uncertainty** (uncertainty in our knowledge) as opposed to **aleatoric uncertainty** (inherent randomness in future returns).
+
+*(Note: The analysis below uses 19 years of actual ETF data, where this uncertainty is even more pronounced.)*
 
 ### What About Historical Sequence Analysis?
 
